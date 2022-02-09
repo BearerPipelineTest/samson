@@ -73,8 +73,19 @@ describe ApplicationHelper do
 
     it "does not allow XSS" do
       result = markdown("<script>alert(1)</script>")
-      result.must_equal "alert(1)\n"
-      assert result.html_safe?
+      result.must_equal "\n"
+    end
+
+    # seehttps://github.com/gjtorikian/commonmarker/issues/169
+    it "keeps content of unknown tags" do
+      result = markdown("<script>alert(1)</script>")
+      pending { result.must_equal "alert(1)" }
+    end
+
+    # see https://github.com/gjtorikian/commonmarker/issues/168
+    it "allows strike-through" do
+      result = markdown("Hey ~~FOO~~ bar")
+      pending { result.must_equal "" }
     end
   end
 

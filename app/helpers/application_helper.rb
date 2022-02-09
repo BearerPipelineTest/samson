@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'ansible'
-require 'github/markdown'
+require 'commonmarker'
 
 module ApplicationHelper
   BOOTSTRAP_FLASH_MAPPINGS = {
@@ -25,9 +25,9 @@ module ApplicationHelper
     text.gsub(%r{https?://[\w:@./\d#?&=-]+}, %(<a href="\\0">\\0</a>))
   end
 
-  # https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-how-to-mitigate-it)
+  # need sanitize for https://github.com/showdownjs/showdown/wiki/Markdown's-XSS-Vulnerability-(and-how-to-mitigate-it)
   def markdown(str)
-    sanitize GitHub::Markdown.render_gfm(str)
+    sanitize CommonMarker.render_html(str)
   end
 
   def deploy_link(project, stage)
